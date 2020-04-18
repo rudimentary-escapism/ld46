@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://src/RayCast2D.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 31 )
@@ -18,5 +19,21 @@ shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+drag_margin_h_enabled = true
 smoothing_enabled = true
 editor_draw_drag_margin = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="RayCast2D"]
+visible = false
+points = PoolVector2Array( 0, 0, 0, 50 )
+width = 1.0
+default_color = Color( 0.396078, 0.396078, 0.396078, 1 )
+
+[node name="Timer" type="Timer" parent="RayCast2D"]
+wait_time = 0.1
+one_shot = true
+[connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
+[connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
