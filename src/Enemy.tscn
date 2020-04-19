@@ -11,7 +11,7 @@ radius = 67.4295
 height = 365.573
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 26.4646
+radius = 33.1434
 height = 82.6165
 
 [sub_resource type="Animation" id=4]
@@ -66,6 +66,8 @@ start_node = "idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -74,12 +76,15 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -50 )
 vframes = 2
 hframes = 8
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -2.72447, -18.0498 )
 shape = SubResource( 1 )
 
 [node name="VisionZone" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionZone"]
 position = Vector2( -6.13013, -18.7309 )
@@ -87,6 +92,8 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="AttackZone" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
 position = Vector2( -4.42731, -17.3687 )

@@ -6,7 +6,7 @@ signal attacked
 
 export (int) var speed := 1200
 export (int) var jump_speed := -1800
-export (int) var gravity := 4000
+export (int) var gravity := 1000
 export (float, 0, 1.0) var friction := 0.1
 export (float, 0, 1.0) var acceleration := 0.25
 
@@ -36,6 +36,11 @@ func get_input() -> void:
         velocity.x = lerp(velocity.x, dir * speed, acceleration)
     else:
         velocity.x = lerp(velocity.x, 0, friction)
+        
+    if Input.is_action_just_pressed("climb_up") and is_on_floor():
+        velocity.y = -500
+    if Input.is_action_just_pressed("climb_down") and is_on_floor():
+        position.y += 10
 
     if velocity.length() > speed * friction:
         if sign(scale.y) == sign(velocity.x):

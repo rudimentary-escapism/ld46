@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal shot_down
 
 export (int) var run_speed := 100
+export (int) var gravity := 1000
 
 var player: Player = null
 
@@ -18,7 +19,7 @@ func _physics_process(delta):
     var velocity = Vector2.ZERO
     if player:
         velocity = position.direction_to(player.position) * run_speed
-        velocity.y = 0
+    velocity.y = gravity * delta
     move_and_slide(velocity)
     $Sprite.flip_h = velocity.x > 0
     
@@ -28,11 +29,9 @@ func _on_shot_down() -> void:
     
 
 func _on_VisionZone_body_entered(body: Node) -> void:
-    if body is Player:
-        player = body
-        animations.travel("walking")
+    player = body
+    animations.travel("walking")
         
 
 func _on_AttackZone_body_entered(body: Node) -> void:
-    if body is Player:
-        body.emit_signal("attacked")
+    body.emit_signal("attacked")
