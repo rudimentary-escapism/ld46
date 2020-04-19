@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/hands.png" type="Texture" id=1]
+[ext_resource path="res://src/Hands.gd" type="Script" id=2]
+
+[node name="Arms" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Polygons" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="ArmUpper" type="Polygon2D" parent="Polygons"]
+position = Vector2( 86.4581, 34.3651 )
+rotation = -0.401094
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 0.36, 19.8516, 5.06, 14.2516, 72.66, 0.351599, 78.36, 6.4516, 79.16, 13.2516, 76.36, 20.2516, 10.66, 27.1516 )
+uv = PoolVector2Array( 0.36, 19.8516, 5.06, 14.2516, 72.66, 0.351599, 78.36, 6.4516, 79.16, 13.2516, 76.36, 20.2516, 10.66, 27.1516 )
+bones = [ NodePath("ArmUpper"), PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ), NodePath("ArmUpper/ArmLower"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("ArmUpper/ArmWhite"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="ArmLower" type="Polygon2D" parent="Polygons"]
+position = Vector2( -44.4564, 9.00039 )
+rotation = 0.200182
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 81.66, 9.1516, 83.26, 18.3516, 156.26, 16.1516, 151.56, 0.951599 )
+uv = PoolVector2Array( 81.66, 9.1516, 83.26, 18.3516, 156.26, 16.1516, 154.26, 2.5516 )
+bones = [ NodePath("ArmUpper"), PoolRealArray( 0, 0, 0, 0 ), NodePath("ArmUpper/ArmLower"), PoolRealArray( 1, 1, 1, 1 ), NodePath("ArmUpper/ArmWhite"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="Hand" type="Polygon2D" parent="Polygons"]
+position = Vector2( -147.006, 22.0918 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 164.56, 5.5516, 164.56, 21.7516, 180.76, 21.9516, 181.76, 6.1516 )
+uv = PoolVector2Array( 164.66, 9.3516, 164.56, 21.7516, 180.76, 21.9516, 181.76, 6.1516 )
+bones = [ NodePath("ArmUpper"), PoolRealArray( 0, 0, 0, 0 ), NodePath("ArmUpper/ArmLower"), PoolRealArray( 0, 0, 0, 0 ), NodePath("ArmUpper/ArmLower/Hand"), PoolRealArray( 1, 1, 1, 1 ), NodePath("ArmUpper/ArmWhite"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="ArmWhite" type="Polygon2D" parent="Polygons"]
+position = Vector2( -0.545471, -23.7283 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 1.36, 38.8516, 40.46, 40.6516, 160.86, 24.0516, 169.66, 35.7516, 160.96, 48.9516, 40.96, 49.2516, 30.86, 56.4516, 14.86, 56.6516, 10.56, 47.7516, 2.76, 47.6516 )
+uv = PoolVector2Array( 1.16, 39.3516, 40.46, 40.6516, 160.16, 23.7516, 169.66, 35.7516, 160.96, 48.9516, 40.96, 49.2516, 30.86, 56.4516, 14.86, 56.6516, 10.56, 47.7516, 2.76, 47.6516 )
+bones = [ NodePath("ArmUpper"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("ArmUpper/ArmLower"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("ArmUpper/ArmWhite"), PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ) ]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="ArmUpper" type="Bone2D" parent="Skeleton2D"]
+position = Vector2( 157.916, 12.2732 )
+rotation = 3.18302
+rest = Transform2D( -0.995467, 0.0951042, -0.0951042, -0.995467, 157.916, 12.2732 )
+__meta__ = {
+"_edit_bone_": true,
+"_edit_ik_": true
+}
+
+[node name="ArmLower" type="Bone2D" parent="Skeleton2D/ArmUpper"]
+position = Vector2( 56.2408, -28.264 )
+rotation = 0.394804
+rest = Transform2D( 0.979107, 0.203346, -0.203346, 0.979107, 56.2408, -28.264 )
+default_length = 70.0
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="Hand" type="Bone2D" parent="Skeleton2D/ArmUpper/ArmLower"]
+position = Vector2( 74.0329, -0.458347 )
+rotation = -6.59567
+rest = Transform2D( 1, 0, 0, 1, 74.0329, -0.458347 )
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="ArmWhite" type="Bone2D" parent="Skeleton2D/ArmUpper"]
+rotation = 0.0304166
+rest = Transform2D( 0.999537, 0.0304119, -0.0304119, 0.999537, 0, 0 )
+default_length = 150.0
