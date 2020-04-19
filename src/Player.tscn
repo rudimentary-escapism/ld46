@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Cat.png" type="Texture" id=2]
@@ -42,25 +42,50 @@ tracks/0/keys = {
 "values": [ 8, 15 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "idle"
+[sub_resource type="Animation" id=4]
+resource_name = "walking_back"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 15, 8 ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=5]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "walking"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "walking_back"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
 
-[sub_resource type="AnimationNodeStateMachine" id=8]
-states/idle/node = SubResource( 4 )
-states/idle/position = Vector2( 82, 56.5 )
-states/walking/node = SubResource( 5 )
-states/walking/position = Vector2( 234.5, 113 )
-transitions = [ "idle", "walking", SubResource( 6 ), "walking", "idle", SubResource( 7 ) ]
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachine" id=12]
+states/idle/node = SubResource( 5 )
+states/idle/position = Vector2( 291.5, 63.5 )
+states/walking/node = SubResource( 6 )
+states/walking/position = Vector2( 532, 137.5 )
+states/walking_back/node = SubResource( 7 )
+states/walking_back/position = Vector2( 145, 145.5 )
+transitions = [ "idle", "walking", SubResource( 8 ), "walking", "idle", SubResource( 9 ), "idle", "walking_back", SubResource( 10 ), "walking_back", "idle", SubResource( 11 ) ]
 start_node = "idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -115,11 +140,12 @@ script = ExtResource( 4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
 anims/walking = SubResource( 3 )
+anims/walking_back = SubResource( 4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 8 )
+tree_root = SubResource( 12 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 9 )
+parameters/playback = SubResource( 13 )
 [connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
 [connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
