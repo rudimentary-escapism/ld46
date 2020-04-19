@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/zmb.png" type="Texture" id=1]
 [ext_resource path="res://src/Enemy.gd" type="Script" id=2]
@@ -47,6 +47,24 @@ tracks/0/keys = {
 "values": [ 8, 15 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/idle/node = SubResource( 6 )
+states/idle/position = Vector2( 105.5, 69 )
+states/walking/node = SubResource( 7 )
+states/walking/position = Vector2( 259.5, 137 )
+transitions = [ "idle", "walking", SubResource( 8 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
 [node name="Enemy" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
@@ -77,3 +95,9 @@ shape = SubResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 4 )
 anims/walking = SubResource( 5 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 10 )
