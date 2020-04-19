@@ -12,11 +12,8 @@ export (float, 0, 1.0) var acceleration := 0.25
 
 var velocity := Vector2.ZERO
 
-#func _ready() -> void:
-#    connect("attacked", self, "_on_attacked")
-#
-#func _on_attacked() -> void:
-#    queue_free()
+onready var animations: AnimationNodeStateMachinePlayback =\
+    $AnimationTree.get("parameters/playback") 
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("fire"):
@@ -39,3 +36,8 @@ func get_input() -> void:
         velocity.x = lerp(velocity.x, dir * speed, acceleration)
     else:
         velocity.x = lerp(velocity.x, 0, friction)
+
+    if velocity.length() > speed * friction:
+        animations.travel("walking")
+    else:
+        animations.travel("idle")

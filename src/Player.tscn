@@ -1,53 +1,84 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/Body.png" type="Texture" id=2]
+[ext_resource path="res://assets/Cat.png" type="Texture" id=2]
 [ext_resource path="res://src/RayCast2D.gd" type="Script" id=3]
 [ext_resource path="res://src/Hands.gd" type="Script" id=4]
 [ext_resource path="res://assets/hands.png" type="Texture" id=5]
-[ext_resource path="res://assets/Cat2.png" type="Texture" id=6]
-[ext_resource path="res://assets/Cat1.png" type="Texture" id=7]
-[ext_resource path="res://assets/Cat4.png" type="Texture" id=8]
-[ext_resource path="res://assets/Cat5.png" type="Texture" id=9]
-[ext_resource path="res://assets/Cat3.png" type="Texture" id=10]
-[ext_resource path="res://assets/Cat6.png" type="Texture" id=11]
-[ext_resource path="res://assets/Cat7.png" type="Texture" id=12]
-[ext_resource path="res://assets/Cat8.png" type="Texture" id=13]
 
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "run",
-"speed": 12.0
-} ]
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 26.8877
+height = 44.3527
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30.3252, 48.4891 )
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "walking"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 8, 15 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/idle/node = SubResource( 5 )
+states/idle/position = Vector2( 82, 56.5 )
+states/walking/node = SubResource( 6 )
+states/walking/position = Vector2( 234.5, 113 )
+transitions = [ "idle", "walking", SubResource( 7 ), "walking", "idle", SubResource( 8 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 speed = 600
 gravity = 0
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0.200087, -1.06982 )
-scale = Vector2( 0.201945, 0.201945 )
-frames = SubResource( 2 )
-animation = "run"
-frame = 1
-playing = true
-flip_h = true
-
 [node name="Sprite" type="Sprite" parent="."]
-visible = false
+position = Vector2( 15.3279, 0 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
 offset = Vector2( -60, 0 )
 flip_h = true
+vframes = 2
+hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+position = Vector2( -8.38694, -1.73523 )
+shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -20 )
@@ -79,5 +110,15 @@ centered = false
 offset = Vector2( -20, -32 )
 flip_h = true
 script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 3 )
+anims/walking = SubResource( 4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 10 )
 [connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
 [connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
