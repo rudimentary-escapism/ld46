@@ -1,6 +1,8 @@
+class_name Player
 extends KinematicBody2D
 
 signal shot
+signal attacked
 
 export (int) var speed := 1200
 export (int) var jump_speed := -1800
@@ -9,6 +11,12 @@ export (float, 0, 1.0) var friction := 0.1
 export (float, 0, 1.0) var acceleration := 0.25
 
 var velocity := Vector2.ZERO
+
+#func _ready() -> void:
+#    connect("attacked", self, "_on_attacked")
+#
+#func _on_attacked() -> void:
+#    queue_free()
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("fire"):
