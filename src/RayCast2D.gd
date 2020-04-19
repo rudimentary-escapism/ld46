@@ -2,9 +2,12 @@ extends RayCast2D
 
 onready var line: Line2D = $Line2D
 onready var timer: Timer = $Timer
+onready var animations: AnimationNodeStateMachinePlayback =\
+    $AnimationTree.get("parameters/playback") 
 
 
 func _on_Player_shot():
+    animations.travel("shoot")
     var direction := get_local_mouse_position().normalized()
     cast_to = direction * 600
     force_raycast_update()

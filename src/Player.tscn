@@ -1,14 +1,67 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Cat.png" type="Texture" id=2]
 [ext_resource path="res://src/RayCast2D.gd" type="Script" id=3]
 [ext_resource path="res://src/Hands.gd" type="Script" id=4]
-[ext_resource path="res://assets/Hands.png" type="Texture" id=5]
+[ext_resource path="res://assets/shooting.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 26.8877
 height = 90.9048
+
+[sub_resource type="Animation" id=14]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Hands:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "shoot"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Hands:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1, 2 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "shoot"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=20]
+states/idle/node = SubResource( 16 )
+states/idle/position = Vector2( 77.5, 64.5 )
+states/shoot/node = SubResource( 17 )
+states/shoot/position = Vector2( 234.5, 106.5 )
+transitions = [ "idle", "shoot", SubResource( 18 ), "shoot", "idle", SubResource( 19 ) ]
+start_node = "idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -115,7 +168,7 @@ drag_margin_bottom = 0.66
 editor_draw_drag_margin = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( -6.90932, -21.1 )
+position = Vector2( -7, -23 )
 cast_to = Vector2( 50, 0 )
 script = ExtResource( 3 )
 
@@ -125,17 +178,28 @@ width = 1.0
 default_color = Color( 0.396078, 0.396078, 0.396078, 1 )
 
 [node name="Timer" type="Timer" parent="RayCast2D"]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 
 [node name="Hands" type="Sprite" parent="RayCast2D"]
-position = Vector2( 2.61684, -1.46544 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 5 )
 centered = false
-offset = Vector2( -20, -32 )
+offset = Vector2( -20, -60 )
 flip_h = true
+hframes = 3
+frame = 1
 script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RayCast2D"]
+anims/idle = SubResource( 14 )
+anims/shoot = SubResource( 15 )
+
+[node name="AnimationTree" type="AnimationTree" parent="RayCast2D"]
+tree_root = SubResource( 20 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 21 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
