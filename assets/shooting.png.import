@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Hands.png-fb366a5db31f46ebdd5fce092daab60c.stex"
+path="res://.import/shooting.png-c19a778b5a36577b11d1fca65057f967.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Hands.png"
-dest_files=[ "res://.import/Hands.png-fb366a5db31f46ebdd5fce092daab60c.stex" ]
+source_file="res://assets/shooting.png"
+dest_files=[ "res://.import/shooting.png-c19a778b5a36577b11d1fca65057f967.stex" ]
 
 [params]
 
