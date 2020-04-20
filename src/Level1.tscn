@@ -1,11 +1,10 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/Furnace.gd" type="Script" id=3]
+[ext_resource path="res://src/Furnace.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/DeatchScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Level.gd" type="Script" id=5]
-[ext_resource path="res://assets/Furnace.png" type="Texture" id=6]
 [ext_resource path="res://src/Firewoods.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/1.png" type="Texture" id=8]
 [ext_resource path="res://assets/Floor.png" type="Texture" id=9]
@@ -14,10 +13,7 @@
 [ext_resource path="res://assets/Wall.png" type="Texture" id=12]
 [ext_resource path="res://src/Dialogue.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/Enemy.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/dialogue/start.gd" type="Script" id=15]
 [ext_resource path="res://src/Door.tscn" type="PackedScene" id=16]
-[ext_resource path="res://src/dialogue/wait.gd" type="Script" id=17]
-[ext_resource path="res://src/dialogue/end.gd" type="Script" id=18]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -44,9 +40,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 131.414
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 5 )
@@ -104,37 +97,8 @@ position = Vector2( -465.68, 331.757 )
 scale = Vector2( 0.588579, 0.58858 )
 texture = ExtResource( 12 )
 
-[node name="Furnace" type="Node2D" parent="."]
-script = ExtResource( 3 )
-start = ExtResource( 15 )
-wait = ExtResource( 17 )
-end = ExtResource( 18 )
-
-[node name="Area2D" type="Area2D" parent="Furnace"]
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Furnace/Area2D"]
-position = Vector2( -334.496, 281.586 )
-shape = SubResource( 3 )
-
-[node name="PressE" type="Label" parent="Furnace"]
-visible = false
-margin_left = -286.07
-margin_top = 207.154
-margin_right = -240.07
-margin_bottom = 221.154
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0.968627, 0.960784, 0.960784, 1 )
-text = "Press E"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="Furnace"]
-position = Vector2( -358.93, 191.005 )
-scale = Vector2( 0.36, 0.36 )
-texture = ExtResource( 6 )
+[node name="Furnace" parent="." instance=ExtResource( 3 )]
+position = Vector2( -375.759, 182.658 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -178,10 +142,9 @@ position = Vector2( 1284.24, -844.269 )
 position = Vector2( 1498.28, -268.739 )
 [connection signal="attacked" from="Player" to="." method="_on_Player_attacked"]
 [connection signal="draw" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_draw"]
-[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
 [connection signal="hide" from="CanvasLayer/Dialogue" to="Door" method="_on_Dialogue_hide"]
+[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
 [connection signal="restart" from="CanvasLayer/DeatchScreen" to="." method="_on_DeatchScreen_restart"]
 [connection signal="body_entered" from="Firewoods" to="Player" method="_on_Firewoods_body_entered"]
 [connection signal="activated" from="Furnace" to="CanvasLayer/Dialogue" method="_on_Furnace_activated"]
-[connection signal="body_entered" from="Furnace/Area2D" to="Furnace" method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="Furnace/Area2D" to="Furnace" method="_on_Area2D_body_exited"]
+[connection signal="end_game" from="Furnace" to="." method="_on_Furnace_end_game"]

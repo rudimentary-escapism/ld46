@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/dialogue/wait.gd" type="Script" id=1]
+[ext_resource path="res://assets/Furnace.png" type="Texture" id=2]
+[ext_resource path="res://src/dialogue/end.gd" type="Script" id=3]
+[ext_resource path="res://src/dialogue/start.gd" type="Script" id=4]
+[ext_resource path="res://src/Furnace.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 131.414
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 61.7179
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 65.576, 178.794 )
+
+[node name="Furnace" type="Node2D"]
+script = ExtResource( 5 )
+start = ExtResource( 4 )
+wait = ExtResource( 1 )
+end = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 87.3621, 104.049 )
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="PressE" type="Label" parent="."]
+visible = false
+margin_left = 119.329
+margin_top = 14.7612
+margin_right = 165.329
+margin_bottom = 28.7612
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0.968627, 0.960784, 0.960784, 1 )
+text = "Press E"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 9 )
+scale = Vector2( 0.36, 0.36 )
+texture = ExtResource( 2 )
+
+[node name="EndZone" type="Area2D" parent="."]
+position = Vector2( -10.7976, 114.847 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndZone"]
+shape = SubResource( 2 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( -10.7976, 114.847 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 16.0448, -79.8021 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_entered" from="EndZone" to="." method="_on_EndZone_body_entered"]

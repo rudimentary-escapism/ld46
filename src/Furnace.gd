@@ -1,6 +1,7 @@
 extends Node2D
 
 signal activated(dialogue)
+signal end_game
 
 export (Script) var start
 export (Script) var wait
@@ -17,6 +18,8 @@ func _input(event: InputEvent) -> void:
             "wait":
                 emit_signal("activated", wait)
             "end":
+                if has_node("StaticBody2D"):
+                    $StaticBody2D.queue_free()
                 emit_signal("activated", end)
 
 func _on_Area2D_body_entered(body: Player) -> void:
@@ -27,3 +30,8 @@ func _on_Area2D_body_entered(body: Player) -> void:
 
 func _on_Area2D_body_exited(body: Player) -> void:
     $PressE.visible = false
+
+
+func _on_EndZone_body_entered(body):
+    if body.has_woods:
+        emit_signal("end_game")
