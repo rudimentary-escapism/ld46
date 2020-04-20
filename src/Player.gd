@@ -11,6 +11,7 @@ export (float, 0, 1.0) var friction := 0.1
 export (float, 0, 1.0) var acceleration := 0.25
 
 var velocity := Vector2.ZERO
+var has_woods := false
 
 onready var animations: AnimationNodeStateMachinePlayback =\
     $AnimationTree.get("parameters/playback") 
@@ -49,3 +50,19 @@ func get_input() -> void:
             animations.travel("walking_back")
     else:
         animations.travel("idle")
+
+
+func _on_Dialogue_hide():
+    set_physics_process(true)
+    set_process_input(true)
+    $RayCast2D/Hands.set_process_input(true)
+
+
+func _on_Dialogue_draw():
+    set_physics_process(false)
+    set_process_input(false)
+    $RayCast2D/Hands.set_process_input(false)
+
+
+func _on_Firewoods_body_entered(body):
+    has_woods = true
