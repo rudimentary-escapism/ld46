@@ -13,6 +13,8 @@ font_data = ExtResource( 4 )
 [node name="Dialogue" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 1.10904
+margin_bottom = 1.10901
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -20,92 +22,44 @@ __meta__ = {
 dialogue = ExtResource( 3 )
 furniture = ExtResource( 1 )
 player = ExtResource( 1 )
+furniture_end = ExtResource( 1 )
+player_end = ExtResource( 1 )
 
-[node name="ImageLeft" type="MarginContainer" parent="."]
-visible = false
-anchor_top = 1.0
+[node name="ImageRight" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -84.0
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Grid" type="GridContainer" parent="ImageLeft"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 1014.0
-margin_bottom = 74.0
-columns = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="ImageLeft/Grid"]
-margin_right = 64.0
-margin_bottom = 64.0
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -32.0
+margin_bottom = 32.0
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ImageLeft/Grid"]
-margin_left = 68.0
-margin_right = 1004.0
-margin_bottom = 64.0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-custom_fonts/font = SubResource( 1 )
-text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ImageRight" type="MarginContainer" parent="."]
+[node name="Label" type="Label" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -84.0
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Grid" type="GridContainer" parent="ImageRight"]
 margin_left = 10.0
-margin_top = 10.0
-margin_right = 1014.0
-margin_bottom = 74.0
-columns = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="ImageRight/Grid"]
-margin_right = 936.0
-margin_bottom = 64.0
+margin_top = -60.0
+margin_right = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-align = 2
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="ImageRight/Grid"]
-margin_left = 940.0
-margin_right = 1004.0
-margin_bottom = 64.0
+[node name="ImageLeft" type="TextureRect" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -32.0
+margin_right = 64.0
+margin_bottom = 32.0
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

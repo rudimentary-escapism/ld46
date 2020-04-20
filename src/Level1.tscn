@@ -5,7 +5,7 @@
 [ext_resource path="res://src/Furnace.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/DeatchScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Level.gd" type="Script" id=5]
-[ext_resource path="res://src/Firewoods.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/Firewoods.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/1.png" type="Texture" id=8]
 [ext_resource path="res://assets/Floor.png" type="Texture" id=9]
 [ext_resource path="res://icon.png" type="Texture" id=10]
@@ -84,7 +84,7 @@ visible = false
 position = Vector2( 318.564, 223.408 )
 scale = Vector2( 0.4, 0.4 )
 
-[node name="Firewoods" parent="." instance=ExtResource( 7 )]
+[node name="Firewoods" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1993.35, -783.281 )
 
 [node name="Сeil" type="Sprite" parent="."]
@@ -142,8 +142,8 @@ position = Vector2( 1284.24, -844.269 )
 position = Vector2( 1498.28, -268.739 )
 [connection signal="attacked" from="Player" to="." method="_on_Player_attacked"]
 [connection signal="draw" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_draw"]
-[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
 [connection signal="hide" from="CanvasLayer/Dialogue" to="Door" method="_on_Dialogue_hide"]
+[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
 [connection signal="restart" from="CanvasLayer/DeatchScreen" to="." method="_on_DeatchScreen_restart"]
 [connection signal="body_entered" from="Firewoods" to="Furnace" method="_on_Firewoods_body_entered"]
 [connection signal="activated" from="Furnace" to="CanvasLayer/Dialogue" method="_on_Furnace_activated"]

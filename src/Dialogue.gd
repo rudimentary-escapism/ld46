@@ -3,6 +3,8 @@ extends Control
 export (Script) var dialogue = null setget set_dialogue
 export (Texture) var furniture
 export (Texture) var player
+export (Texture) var furniture_end
+export (Texture) var player_end
 
 var list := []
 
@@ -14,13 +16,20 @@ func set_dialogue(d) -> void:
     list = d.new().dialogue
     
 func line(d: Dictionary) -> void:
-    for c in get_children():
-        c.visible = false
-    var panel: Control = get_node(d.position)
-    panel.visible = true
-    panel.get_node("Grid/Label").text = d.text
-    panel.get_node("Grid/TextureRect").texture = player\
-        if d.name == "player" else furniture
+    $ImageLeft.visible = false
+    $ImageRight.visible = false
+    var image: Control = get_node(d.position)
+    image.visible = true
+    $Label.text = d.text
+    match d.name:
+        "player":
+            image.texture = player
+        "furniture":
+            image.texture = furniture
+        "playe_end":
+            image.texture = player_end
+        "furniture_end":
+            image.texture = furniture_end
 
 func _input(event: InputEvent) -> void:
     if event.is_action_pressed("action") or event.is_action_pressed("fire"):
