@@ -23,7 +23,7 @@ func _input(event: InputEvent) -> void:
                 emit_signal("activated", end)
 
 func _on_Area2D_body_entered(body: Player) -> void:
-    if body.has_woods:
+    if $Opened.visible:
         status = "end"
     $PressE.visible = true
 
@@ -33,5 +33,10 @@ func _on_Area2D_body_exited(body: Player) -> void:
 
 
 func _on_EndZone_body_entered(body):
-    if body.has_woods:
+    if $Opened.visible:
         emit_signal("end_game")
+
+
+func _on_Firewoods_body_entered(body):
+    $Closed.visible = false
+    $Opened.visible = true
