@@ -8,9 +8,10 @@ export (Script) var wait
 export (Script) var end
 
 var status = "start"
+var active := true
 
 func _input(event: InputEvent) -> void:
-    if event.is_action_pressed("action") and $PressE.visible:
+    if event.is_action_pressed("action") and $PressE.visible and active:
         match status:
             "start":
                 emit_signal("activated", start)
@@ -40,3 +41,11 @@ func _on_EndZone_body_entered(body):
 func _on_Firewoods_body_entered(body):
     $Closed.visible = false
     $Opened.visible = true
+
+
+func _on_Dialogue_draw():
+    active = false
+
+
+func _on_Dialogue_hide():
+    active = true
