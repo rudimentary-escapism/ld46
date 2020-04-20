@@ -65,7 +65,7 @@ start_node = "idle"
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
-length = 0.001
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -73,10 +73,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0 ]
+"values": [ 0, 2 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -148,13 +148,14 @@ speed = 600
 gravity = 0
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 15, 0 )
+position = Vector2( -3.79831, -2.02444 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
 offset = Vector2( 20, -80 )
 flip_h = true
 vframes = 2
 hframes = 8
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.855721, -28.583 )
@@ -191,7 +192,6 @@ centered = false
 offset = Vector2( -20, -60 )
 flip_h = true
 hframes = 3
-frame = 1
 script = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RayCast2D"]
