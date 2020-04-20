@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/zmb.png" type="Texture" id=1]
 [ext_resource path="res://src/Enemy.gd" type="Script" id=2]
@@ -13,6 +13,22 @@ height = 594.042
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 33.1434
 height = 82.6165
+
+[sub_resource type="Animation" id=11]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 8, 13 ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "idle"
@@ -44,8 +60,11 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 8, 15 ]
+"values": [ 16, 23 ]
 }
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "death"
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "idle"
@@ -55,13 +74,20 @@ animation = "walking"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=8]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
 [sub_resource type="AnimationNodeStateMachine" id=9]
+states/death/node = SubResource( 12 )
+states/death/position = Vector2( 400.5, 67 )
 states/idle/node = SubResource( 6 )
 states/idle/position = Vector2( 105.5, 69 )
 states/walking/node = SubResource( 7 )
 states/walking/position = Vector2( 259.5, 137 )
-transitions = [ "idle", "walking", SubResource( 8 ) ]
+transitions = [ "idle", "walking", SubResource( 8 ), "walking", "death", SubResource( 13 ), "idle", "death", SubResource( 14 ) ]
 start_node = "idle"
+end_node = "death"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
@@ -72,10 +98,11 @@ script = ExtResource( 2 )
 run_speed = 200
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -8.90823, -2.81311 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, -50 )
-vframes = 2
+vframes = 3
 hframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -100,6 +127,7 @@ position = Vector2( -4.42731, -17.3687 )
 shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/death = SubResource( 11 )
 anims/idle = SubResource( 4 )
 anims/walking = SubResource( 5 )
 

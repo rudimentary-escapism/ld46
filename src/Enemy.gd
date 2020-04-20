@@ -6,6 +6,7 @@ export (int) var run_speed := 100
 export (int) var gravity := 1000
 
 var player: Player = null
+var is_dead := false
 
 onready var animations: AnimationNodeStateMachinePlayback =\
     $AnimationTree.get("parameters/playback") 
@@ -25,13 +26,18 @@ func _physics_process(delta):
     
 
 func _on_shot_down() -> void:
-    queue_free()
+    animations.travel("death")
+    is_dead = true
+    $CollisionShape2D.disabled = true
+    set_physics_process(false)
     
 
 func _on_VisionZone_body_entered(body: Node) -> void:
-    player = body
-    animations.travel("walking")
+    if not is_dead:
+        player = body
+        animations.travel("walking")
         
 
 func _on_AttackZone_body_entered(body: Node) -> void:
-    body.emit_signal("attacked")
+    if not is_dead:
+        body.emit_signal("attacked")
