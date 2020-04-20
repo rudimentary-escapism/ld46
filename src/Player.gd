@@ -39,8 +39,6 @@ func get_input() -> void:
         
     if Input.is_action_just_pressed("climb_up") and is_on_floor():
         velocity.y = -500
-    if Input.is_action_just_pressed("climb_down") and is_on_floor():
-        position.y += 10
 
     if velocity.length() > speed * friction:
         if sign(scale.y) == sign(velocity.x):
