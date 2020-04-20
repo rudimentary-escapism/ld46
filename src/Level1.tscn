@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://assets/Poster3.png" type="Texture" id=18]
 [ext_resource path="res://assets/Dirt.png" type="Texture" id=19]
 [ext_resource path="res://assets/wallonwall.png" type="Texture" id=20]
+[ext_resource path="res://assets/FurnaceIcon.png" type="Texture" id=21]
+[ext_resource path="res://assets/Hero.png" type="Texture" id=22]
+[ext_resource path="res://assets/FurnaceIcon2.png" type="Texture" id=23]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -189,12 +192,16 @@ pause_mode = 2
 
 [node name="Dialogue" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false
+furniture = ExtResource( 21 )
+player = ExtResource( 22 )
+furniture_end = ExtResource( 23 )
+player_end = ExtResource( 22 )
 
 [node name="DeatchScreen" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
 
 [node name="Door" parent="." instance=ExtResource( 16 )]
-position = Vector2( 318.564, 223.408 )
+position = Vector2( 469.76, 216.376 )
 scale = Vector2( 0.4, 0.4 )
 
 [node name="Firewoods" parent="." instance=ExtResource( 6 )]
@@ -325,11 +332,11 @@ texture = ExtResource( 12 )
 position = Vector2( -579.759, 303.005 )
 texture = ExtResource( 12 )
 [connection signal="attacked" from="Player" to="." method="_on_Player_attacked"]
-[connection signal="draw" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_draw"]
 [connection signal="draw" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_draw"]
-[connection signal="hide" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_hide"]
-[connection signal="hide" from="CanvasLayer/Dialogue" to="Door" method="_on_Dialogue_hide"]
+[connection signal="draw" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_draw"]
 [connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
+[connection signal="hide" from="CanvasLayer/Dialogue" to="Door" method="_on_Dialogue_hide"]
+[connection signal="hide" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_hide"]
 [connection signal="restart" from="CanvasLayer/DeatchScreen" to="." method="_on_DeatchScreen_restart"]
 [connection signal="body_entered" from="Firewoods" to="Furnace" method="_on_Firewoods_body_entered"]
 [connection signal="activated" from="Furnace" to="CanvasLayer/Dialogue" method="_on_Furnace_activated"]
