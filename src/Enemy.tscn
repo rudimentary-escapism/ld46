@@ -8,7 +8,7 @@ extents = Vector2( 25.7835, 65.7295 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 67.4295
-height = 365.573
+height = 594.042
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 33.1434
@@ -69,6 +69,7 @@ start_node = "idle"
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
+run_speed = 200
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
@@ -76,7 +77,6 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -50 )
 vframes = 2
 hframes = 8
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -2.72447, -18.0498 )
