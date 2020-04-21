@@ -9,16 +9,21 @@ export (int) var jump_speed := -1800
 export (int) var gravity := 1000
 export (float, 0, 1.0) var friction := 0.1
 export (float, 0, 1.0) var acceleration := 0.25
+export (int) var max_bullets := 6
 
 var velocity := Vector2.ZERO
+var bullets = max_bullets
 
 onready var animations: AnimationNodeStateMachinePlayback =\
     $AnimationTree.get("parameters/playback") 
 
 func _input(event: InputEvent) -> void:
-    if event.is_action_pressed("fire") and $AttackSpeed.is_stopped():
+    if event.is_action_pressed("fire") and $AttackSpeed.is_stopped() and bullets > 0:
         $AttackSpeed.start()
+        bullets -= 1
         emit_signal("shot")
+    if event.is_action_pressed("reload") and $AttackSpeed.is_stopped():
+        bullets = max_bullets
     if event is InputEventMouseMotion:
         scale.x = 1 if get_local_mouse_position().normalized().x > 0 else -1
 
