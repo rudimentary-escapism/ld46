@@ -16,7 +16,8 @@ onready var animations: AnimationNodeStateMachinePlayback =\
     $AnimationTree.get("parameters/playback") 
 
 func _input(event: InputEvent) -> void:
-    if event.is_action_pressed("fire"):
+    if event.is_action_pressed("fire") and $AttackSpeed.is_stopped():
+        $AttackSpeed.start()
         emit_signal("shot")
     if event is InputEventMouseMotion:
         scale.x = 1 if get_local_mouse_position().normalized().x > 0 else -1

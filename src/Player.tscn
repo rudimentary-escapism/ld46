@@ -152,6 +152,7 @@ offset = Vector2( 20, -80 )
 flip_h = true
 vframes = 2
 hframes = 8
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.855721, -28.583 )
@@ -209,5 +210,9 @@ tree_root = SubResource( 20 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 21 )
+
+[node name="AttackSpeed" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
 [connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
