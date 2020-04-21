@@ -62,13 +62,13 @@ func get_input() -> void:
 func _on_Dialogue_hide():
     set_physics_process(true)
     set_process_input(true)
-    $RayCast2D/Hands.set_process_input(true)
+    $Hands.set_process_input(true)
 
 
 func _on_Dialogue_draw():
     set_physics_process(false)
     set_process_input(false)
-    $RayCast2D/Hands.set_process_input(false)
+    $Hands.set_process_input(false)
 
 
 func _on_Reload_finished():

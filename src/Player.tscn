@@ -16,7 +16,7 @@ height = 90.9048
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Hands:frame")
+tracks/0/path = NodePath("../Hands:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -32,7 +32,7 @@ tracks/0/keys = {
 resource_name = "shoot"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Hands:frame")
+tracks/0/path = NodePath("../Hands:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -155,7 +155,6 @@ offset = Vector2( 20, -80 )
 flip_h = true
 vframes = 2
 hframes = 8
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.855721, -28.583 )
@@ -169,22 +168,8 @@ smoothing_enabled = true
 drag_margin_top = 0.0
 drag_margin_bottom = 0.66
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="Hands" type="Sprite" parent="."]
 position = Vector2( -7, -23 )
-cast_to = Vector2( 50, 0 )
-collision_mask = 5
-script = ExtResource( 3 )
-
-[node name="Line2D" type="Line2D" parent="RayCast2D"]
-points = PoolVector2Array( 0, 0, 0, 0 )
-width = 1.0
-default_color = Color( 1, 1, 1, 1 )
-
-[node name="Timer" type="Timer" parent="RayCast2D"]
-wait_time = 0.05
-one_shot = true
-
-[node name="Hands" type="Sprite" parent="RayCast2D"]
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 5 )
 centered = false
@@ -193,15 +178,32 @@ flip_h = true
 hframes = 3
 script = ExtResource( 4 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RayCast2D"]
+[node name="RayCast2D" type="RayCast2D" parent="Hands"]
+position = Vector2( 201.479, -0.964027 )
+scale = Vector2( 3.33333, 3.33333 )
+cast_to = Vector2( 50, 0 )
+collision_mask = 5
+script = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hands/RayCast2D"]
+root_node = NodePath("../..")
 anims/idle = SubResource( 2 )
 anims/shoot = SubResource( 3 )
 
-[node name="AnimationTree" type="AnimationTree" parent="RayCast2D"]
+[node name="AnimationTree" type="AnimationTree" parent="Hands/RayCast2D"]
 tree_root = SubResource( 8 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 9 )
+
+[node name="Timer" type="Timer" parent="Hands/RayCast2D"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Line2D" type="Line2D" parent="Hands/RayCast2D"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 10 )
@@ -228,6 +230,6 @@ volume_db = -20.0
 
 [node name="EmptyShot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
-[connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
-[connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
+[connection signal="shot" from="." to="Hands/RayCast2D" method="_on_Player_shot"]
+[connection signal="timeout" from="Hands/RayCast2D/Timer" to="Hands/RayCast2D" method="_on_Timer_timeout"]
 [connection signal="finished" from="Reload" to="." method="_on_Reload_finished"]
