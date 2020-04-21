@@ -1,6 +1,46 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/TheEnd.png" type="Texture" id=1]
+[ext_resource path="res://assets/CutScene.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "CutScene"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 2 ]
+}
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 1000, 1000 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 1000, 0, 1000, 1000 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 2000, 0, 1000, 1000 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
 
 [node name="LastScene" type="Control"]
 anchor_right = 1.0
@@ -10,6 +50,7 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
@@ -22,12 +63,32 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -500.0
-margin_top = -500.0
-margin_right = 500.0
-margin_bottom = 500.0
+margin_left = -695.31
+margin_top = -308.362
+margin_right = 851.69
+margin_bottom = 1238.64
 texture = ExtResource( 1 )
 stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CutScene" type="Sprite" parent="."]
+visible = false
+position = Vector2( 500.585, 300.439 )
+scale = Vector2( 0.602243, 0.602243 )
+texture = ExtResource( 2 )
+hframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CutScene")
+anims/CutScene = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 528.544, 298.684 )
+scale = Vector2( 0.60816, 0.602328 )
+frames = SubResource( 5 )
+frame = 2
+speed_scale = 0.5
+playing = true
