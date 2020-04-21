@@ -18,12 +18,16 @@ onready var animations: AnimationNodeStateMachinePlayback =\
     $AnimationTree.get("parameters/playback") 
 
 func _input(event: InputEvent) -> void:
-    if event.is_action_pressed("fire") and $AttackSpeed.is_stopped() and bullets > 0:
+    if event.is_action_pressed("fire") and $AttackSpeed.is_stopped() and not $Reload.playing:
         $AttackSpeed.start()
-        bullets -= 1
-        emit_signal("shot")
-    if event.is_action_pressed("reload") and $AttackSpeed.is_stopped():
-        bullets = max_bullets
+        if bullets > 0:
+            bullets -= 1
+            emit_signal("shot")
+            $Shot.play()
+        else:
+            $EmptyShot.play()
+    if event.is_action_pressed("reload") and $AttackSpeed.is_stopped() and not $Reload.playing:
+        $Reload.play()
     if event is InputEventMouseMotion:
         scale.x = 1 if get_local_mouse_position().normalized().x > 0 else -1
 
@@ -65,3 +69,7 @@ func _on_Dialogue_draw():
     set_physics_process(false)
     set_process_input(false)
     $RayCast2D/Hands.set_process_input(false)
+
+
+func _on_Reload_finished():
+    bullets = max_bullets

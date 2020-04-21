@@ -52,3 +52,4 @@ func die() -> void:
     $CollisionShape2D.disabled = true
     $Head/CollisionShape2D.disabled = true
     set_physics_process(false)
+    $Death.play()

@@ -1,10 +1,13 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Cat.png" type="Texture" id=2]
 [ext_resource path="res://src/RayCast2D.gd" type="Script" id=3]
 [ext_resource path="res://src/Hands.gd" type="Script" id=4]
 [ext_resource path="res://assets/shooting.png" type="Texture" id=5]
+[ext_resource path="res://assets/shot.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/reload.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/emptyshot.wav" type="AudioStream" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 26.8877
@@ -214,5 +217,17 @@ parameters/playback = SubResource( 21 )
 [node name="AttackSpeed" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -5.0
+
+[node name="Reload" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -20.0
+
+[node name="EmptyShot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 [connection signal="shot" from="." to="RayCast2D" method="_on_Player_shot"]
 [connection signal="timeout" from="RayCast2D/Timer" to="RayCast2D" method="_on_Timer_timeout"]
+[connection signal="finished" from="Reload" to="." method="_on_Reload_finished"]

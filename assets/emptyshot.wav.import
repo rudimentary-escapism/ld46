@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/emptyshot.wav-f069678afe6e6c73aac150a19490f934.sample"
+
+[deps]
+
+source_file="res://assets/emptyshot.wav"
+dest_files=[ "res://.import/emptyshot.wav-f069678afe6e6c73aac150a19490f934.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
