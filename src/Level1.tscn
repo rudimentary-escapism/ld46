@@ -116,17 +116,14 @@ texture = ExtResource( 9 )
 
 [node name="Floor5" type="Sprite" parent="Floor"]
 position = Vector2( 3.44283, -1652.52 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
 
 [node name="Floor4" type="Sprite" parent="Floor"]
 position = Vector2( 1917.37, -1652.92 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
 
 [node name="Floor3" type="Sprite" parent="Floor"]
 position = Vector2( -455.512, -823.583 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
 
 [node name="Floor2" type="Sprite" parent="Floor"]
@@ -274,7 +271,6 @@ texture = ExtResource( 11 )
 
 [node name="Сeil2" type="Sprite" parent="Сeil2"]
 position = Vector2( -2290.91, 1636.19 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 11 )
 
 [node name="Сeil" type="Sprite" parent="Сeil2"]
@@ -332,11 +328,11 @@ texture = ExtResource( 12 )
 position = Vector2( -579.759, 303.005 )
 texture = ExtResource( 12 )
 [connection signal="attacked" from="Player" to="." method="_on_Player_attacked"]
-[connection signal="draw" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_draw"]
 [connection signal="draw" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_draw"]
-[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
+[connection signal="draw" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_draw"]
 [connection signal="hide" from="CanvasLayer/Dialogue" to="Door" method="_on_Dialogue_hide"]
 [connection signal="hide" from="CanvasLayer/Dialogue" to="Furnace" method="_on_Dialogue_hide"]
+[connection signal="hide" from="CanvasLayer/Dialogue" to="Player" method="_on_Dialogue_hide"]
 [connection signal="restart" from="CanvasLayer/DeatchScreen" to="." method="_on_DeatchScreen_restart"]
 [connection signal="body_entered" from="Firewoods" to="Furnace" method="_on_Firewoods_body_entered"]
 [connection signal="activated" from="Furnace" to="CanvasLayer/Dialogue" method="_on_Furnace_activated"]
