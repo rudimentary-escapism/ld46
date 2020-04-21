@@ -7,6 +7,7 @@ export (Texture) var furniture_end
 export (Texture) var player_end
 
 var list := []
+        
 
 func _ready():
     if list.size() > 0 and visible:
@@ -32,6 +33,9 @@ func line(d: Dictionary) -> void:
             image.texture = furniture_end
 
 func _input(event: InputEvent) -> void:
+    if event.is_action_pressed("ui_cancel"):
+        visible = false
+
     if event.is_action_pressed("action") or event.is_action_pressed("fire"):
         if list.size() > 0 and visible:
             line(list.pop_front())
