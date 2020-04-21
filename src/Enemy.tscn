@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/zmb.png" type="Texture" id=1]
 [ext_resource path="res://src/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://src/Head.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 25.7835, 65.7295 )
+extents = Vector2( 17.375, 65.7295 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 67.4295
@@ -14,7 +15,7 @@ height = 594.042
 radius = 33.1434
 height = 82.6165
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=4]
 resource_name = "death"
 length = 0.5
 tracks/0/type = "value"
@@ -30,8 +31,7 @@ tracks/0/keys = {
 "values": [ 8, 13 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "idle"
+[sub_resource type="Animation" id=5]
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -47,8 +47,7 @@ tracks/0/keys = {
 "values": [ 0, 3 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "walking"
+[sub_resource type="Animation" id=6]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -63,33 +62,36 @@ tracks/0/keys = {
 "values": [ 16, 23 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "death"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "walking"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
-[sub_resource type="AnimationNodeStateMachine" id=9]
-states/death/node = SubResource( 12 )
+[sub_resource type="AnimationNodeStateMachine" id=13]
+states/death/node = SubResource( 7 )
 states/death/position = Vector2( 400.5, 67 )
-states/idle/node = SubResource( 6 )
+states/idle/node = SubResource( 8 )
 states/idle/position = Vector2( 105.5, 69 )
-states/walking/node = SubResource( 7 )
+states/walking/node = SubResource( 9 )
 states/walking/position = Vector2( 259.5, 137 )
-transitions = [ "idle", "walking", SubResource( 8 ), "walking", "death", SubResource( 13 ), "idle", "death", SubResource( 14 ) ]
+transitions = [ "idle", "walking", SubResource( 10 ), "walking", "death", SubResource( 11 ), "idle", "death", SubResource( 12 ) ]
 start_node = "idle"
 end_node = "death"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
+
+[sub_resource type="CircleShape2D" id=15]
+radius = 27.4291
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 4
@@ -104,12 +106,14 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -50 )
 vframes = 3
 hframes = 8
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2.72447, -18.0498 )
+position = Vector2( 1.96407, -13.8301 )
 shape = SubResource( 1 )
 
 [node name="VisionZone" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -119,6 +123,7 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="AttackZone" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
@@ -127,12 +132,22 @@ position = Vector2( -4.42731, -17.3687 )
 shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/death = SubResource( 11 )
-anims/idle = SubResource( 4 )
-anims/walking = SubResource( 5 )
+anims/death = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/walking = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 9 )
+tree_root = SubResource( 13 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 10 )
+parameters/playback = SubResource( 14 )
+
+[node name="Head" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+position = Vector2( -0.937714, -56.7313 )
+shape = SubResource( 15 )
+[connection signal="shot_down" from="Head" to="." method="_on_Head_shot_down"]

@@ -4,6 +4,7 @@ signal shot_down
 
 export (int) var run_speed := 100
 export (int) var gravity := 1000
+export (int) var hp := 3
 
 var player: Player = null
 var is_dead := false
@@ -26,10 +27,9 @@ func _physics_process(delta):
     
 
 func _on_shot_down() -> void:
-    animations.travel("death")
-    is_dead = true
-    $CollisionShape2D.disabled = true
-    set_physics_process(false)
+    hp -= 1
+    if hp == 0:
+        die()
     
 
 func _on_VisionZone_body_entered(body: Node) -> void:
@@ -41,3 +41,14 @@ func _on_VisionZone_body_entered(body: Node) -> void:
 func _on_AttackZone_body_entered(body: Node) -> void:
     if not is_dead:
         body.emit_signal("attacked")
+
+
+func _on_Head_shot_down():
+    die()
+    
+func die() -> void:
+    animations.travel("death")
+    is_dead = true
+    $CollisionShape2D.disabled = true
+    $Head/CollisionShape2D.disabled = true
+    set_physics_process(false)
